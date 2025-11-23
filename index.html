@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>วงล้อเซียมซีมหาเฮง</title>
+
+<style>
+    body {
+        margin: 0;
+        background: linear-gradient(180deg, #0a0a0a, #2c003e);
+        font-family: 'Prompt', sans-serif;
+        overflow-x: hidden;
+        color: white;
+        text-align: center;
+    }
+
+    h1 {
+        margin-top: 40px;
+        font-size: 2.4rem;
+        font-weight: 700;
+        text-shadow: 0 0 10px #ff89ff, 0 0 25px #bf00ff;
+    }
+
+    #wheel-container {
+        margin: 40px auto;
+        width: 320px;
+        height: 320px;
+        position: relative;
+    }
+
+    #wheel {
+        width: 320px;
+        height: 320px;
+        border-radius: 50%;
+        border: 8px solid #ffffff50;
+        box-shadow: 0 0 20px #ff5cff, 0 0 60px #b700ff;
+        transition: transform 5s cubic-bezier(0.1, 0.9, 0.25, 1);
+    }
+
+    #pointer {
+        width: 0; 
+        height: 0; 
+        border-left: 20px solid transparent;
+        border-right: 20px solid transparent;
+        border-bottom: 35px solid #ff00dd;
+        position: absolute;
+        top: -40px;
+        left: 50%;
+        transform: translateX(-50%);
+        filter: drop-shadow(0 0 10px #ff00ff);
+    }
+
+    button {
+        background: linear-gradient(90deg, #ff00c8, #a200ff);
+        border: none;
+        padding: 14px 30px;
+        font-size: 1.2rem;
+        border-radius: 12px;
+        color: white;
+        cursor: pointer;
+        margin-top: 25px;
+        box-shadow: 0 0 15px #ff00ea;
+        transition: 0.2s;
+    }
+
+    button:hover {
+        transform: scale(1.07);
+        box-shadow: 0 0 25px #ff3dff;
+    }
+
+    #result {
+        margin-top: 30px;
+        font-size: 1.6rem;
+        font-weight: 600;
+        text-shadow: 0 0 15px #ff74ff;
+    }
+
+</style>
+</head>
+<body>
+
+<h1>🔮 วงล้อเซียมซีมหาเฮง 🔮</h1>
+
+<div id="wheel-container">
+    <div id="pointer"></div>
+    <img id="wheel" src="https://i.imgur.com/Y4p8dQw.png">
+</div>
+
+<button onclick="spin()">หมุนเลย!</button>
+
+<div id="result"></div>
+
+<script>
+    const fortunes = [
+        "ดวงดีมาก โชคลาภกำลังมา",
+        "ความรักกำลังพุ่งแรง คนคุยเริ่มคิดถึง",
+        "งานเปิดโอกาสใหม่ รายได้ดีขึ้น",
+        "เหนื่อยหน่อยแต่จะสำเร็จ",
+        "มีคนแอบชอบอยู่ใกล้ ๆ",
+        "ดวงเฮงแบบไม่คาดคิด",
+        "ระวังเรื่องการเงิน แต่แก้ได้",
+        "มีโชคจากคนผิวสองสี",
+        "กำลังจะได้รับข่าวดีหนึ่งเรื่อง",
+        "มีคนกำลังอวยพรให้มึงอยู่"
+    ];
+
+    function spin() {
+        const wheel = document.getElementById("wheel");
+        const result = document.getElementById("result");
+
+        const randomRotation = 360 * 5 + Math.floor(Math.random() * 360);
+        wheel.style.transform = `rotate(${randomRotation}deg)`;
+
+        setTimeout(() => {
+            const index = Math.floor((randomRotation % 360) / (360 / fortunes.length));
+            result.innerHTML = "✨ ผลคือ: <br>" + fortunes[index] + " ✨";
+        }, 5000);
+    }
+</script>
+
+</body>
+</html>
