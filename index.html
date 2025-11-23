@@ -6,118 +6,244 @@
 <title>วงล้อเซียมซีมหาเฮง</title>
 
 <style>
-    body {
-        margin: 0;
-        background: linear-gradient(180deg, #0a0a0a, #2c003e);
-        font-family: 'Prompt', sans-serif;
-        overflow-x: hidden;
-        color: white;
-        text-align: center;
-    }
+  * {
+    box-sizing: border-box;
+    font-family: "Prompt", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
 
-    h1 {
-        margin-top: 40px;
-        font-size: 2.4rem;
-        font-weight: 700;
-        text-shadow: 0 0 10px #ff89ff, 0 0 25px #bf00ff;
-    }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: radial-gradient(circle at top, #3b0764 0, #020617 55%, #000 100%);
+    color: white;
+    text-align: center;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 32px 16px 40px;
+  }
 
-    #wheel-container {
-        margin: 40px auto;
-        width: 320px;
-        height: 320px;
-        position: relative;
-    }
+  h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    text-shadow: 0 0 16px #fb37ff, 0 0 40px #a855f7;
+  }
 
-    #wheel {
-        width: 320px;
-        height: 320px;
-        border-radius: 50%;
-        border: 8px solid #ffffff50;
-        box-shadow: 0 0 20px #ff5cff, 0 0 60px #b700ff;
-        transition: transform 5s cubic-bezier(0.1, 0.9, 0.25, 1);
-    }
+  .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-bottom: 18px;
+  }
 
-    #pointer {
-        width: 0; 
-        height: 0; 
-        border-left: 20px solid transparent;
-        border-right: 20px solid transparent;
-        border-bottom: 35px solid #ff00dd;
-        position: absolute;
-        top: -40px;
-        left: 50%;
-        transform: translateX(-50%);
-        filter: drop-shadow(0 0 10px #ff00ff);
-    }
+  .app {
+    max-width: 480px;
+    width: 100%;
+  }
 
-    button {
-        background: linear-gradient(90deg, #ff00c8, #a200ff);
-        border: none;
-        padding: 14px 30px;
-        font-size: 1.2rem;
-        border-radius: 12px;
-        color: white;
-        cursor: pointer;
-        margin-top: 25px;
-        box-shadow: 0 0 15px #ff00ea;
-        transition: 0.2s;
-    }
+  #wheel-container {
+    margin: 20px auto 10px;
+    width: 320px;
+    height: 320px;
+    position: relative;
+  }
 
-    button:hover {
-        transform: scale(1.07);
-        box-shadow: 0 0 25px #ff3dff;
-    }
+  #pointer {
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-bottom: 36px solid #f97316;
+    position: absolute;
+    top: -38px;
+    left: 50%;
+    transform: translateX(-50%);
+    filter: drop-shadow(0 0 12px rgba(249, 115, 22, 0.9));
+    z-index: 3;
+  }
 
-    #result {
-        margin-top: 30px;
-        font-size: 1.6rem;
-        font-weight: 600;
-        text-shadow: 0 0 15px #ff74ff;
-    }
+  #wheel-glow {
+    position: absolute;
+    inset: 15px;
+    border-radius: 999px;
+    background: radial-gradient(circle at 30% 10%, rgba(251, 191, 36, 0.6), transparent 65%);
+    filter: blur(10px);
+    opacity: 0.9;
+    pointer-events: none;
+    z-index: 0;
+  }
 
+  #wheel {
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    border: 8px solid rgba(255,255,255,0.35);
+    box-shadow:
+      0 0 20px #ff5cff,
+      0 0 70px #a855f7;
+    transition: transform 4.5s cubic-bezier(0.1, 0.9, 0.25, 1);
+    background: conic-gradient(
+      #ff4bdb 0deg 36deg,
+      #ffdd59 36deg 72deg,
+      #4bcffa 72deg 108deg,
+      #32ff7e 108deg 144deg,
+      #cd84f1 144deg 180deg,
+      #ff9f1a 180deg 216deg,
+      #ff3838 216deg 252deg,
+      #18dcff 252deg 288deg,
+      #7efff5 288deg 324deg,
+      #ffcccc 324deg 360deg
+    );
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .wheel-center {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 15%, #ffffff, #d4d4d8 40%, #020617 100%);
+    box-shadow:
+      0 0 16px rgba(255,255,255,0.9),
+      0 0 32px rgba(251, 191, 36, 0.6);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #020617;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .wheel-center span {
+    font-size: 0.55rem;
+    opacity: 0.7;
+  }
+
+  button {
+    background: linear-gradient(90deg, #ff00c8, #a200ff);
+    border: none;
+    padding: 12px 30px;
+    font-size: 1.05rem;
+    border-radius: 999px;
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+    box-shadow: 0 0 15px #ff00ea;
+    transition: 0.18s;
+    font-weight: 600;
+  }
+
+  button:hover:not(:disabled) {
+    transform: translateY(-1px) scale(1.03);
+    box-shadow: 0 0 22px #ff3dff;
+  }
+
+  button:active:not(:disabled) {
+    transform: translateY(1px) scale(0.97);
+    box-shadow: 0 0 10px rgba(0,0,0,0.7);
+  }
+
+  button:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+
+  #result {
+    margin-top: 22px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-shadow: 0 0 12px #fb37ff;
+    min-height: 2.5em;
+  }
+
+  #result span.small {
+    display: block;
+    font-size: 0.85rem;
+    opacity: 0.8;
+    margin-top: 4px;
+  }
 </style>
 </head>
 <body>
 
-<h1>🔮 วงล้อเซียมซีมหาเฮง 🔮</h1>
+<div class="app">
+  <h1>🔮 วงล้อเซียมซีมหาเฮง 🔮</h1>
+  <div class="subtitle">ตั้งคำถามในใจ แล้วกดหมุน ปล่อยให้จักรวาลตอบแทนมึงเอง ✨</div>
 
-<div id="wheel-container">
+  <div id="wheel-container">
     <div id="pointer"></div>
-    <img id="wheel" src="https://i.imgur.com/Y4p8dQw.png">
+    <div id="wheel-glow"></div>
+    <div id="wheel">
+      <div class="wheel-center">
+        SPIN
+        <span>YOUR FATE</span>
+      </div>
+    </div>
+  </div>
+
+  <button id="spinBtn">หมุนเลย!</button>
+
+  <div id="result"></div>
 </div>
 
-<button onclick="spin()">หมุนเลย!</button>
-
-<div id="result"></div>
-
 <script>
-    const fortunes = [
-        "ดวงดีมาก โชคลาภกำลังมา",
-        "ความรักกำลังพุ่งแรง คนคุยเริ่มคิดถึง",
-        "งานเปิดโอกาสใหม่ รายได้ดีขึ้น",
-        "เหนื่อยหน่อยแต่จะสำเร็จ",
-        "มีคนแอบชอบอยู่ใกล้ ๆ",
-        "ดวงเฮงแบบไม่คาดคิด",
-        "ระวังเรื่องการเงิน แต่แก้ได้",
-        "มีโชคจากคนผิวสองสี",
-        "กำลังจะได้รับข่าวดีหนึ่งเรื่อง",
-        "มีคนกำลังอวยพรให้มึงอยู่"
-    ];
+  const fortunes = [
+    "ดวงดีมาก โชคลาภกำลังมา",
+    "ความรักกำลังพุ่งแรง คนคุยเริ่มคิดถึง",
+    "งานเปิดโอกาสใหม่ รายได้ดีขึ้น",
+    "เหนื่อยหน่อยแต่จะสำเร็จ",
+    "มีคนแอบชอบอยู่ใกล้ ๆ",
+    "ดวงเฮงแบบไม่คาดคิด",
+    "ระวังเรื่องการเงิน แต่แก้ได้",
+    "มีโชคจากคนผิวสองสี",
+    "กำลังจะได้รับข่าวดีหนึ่งเรื่อง",
+    "มีคนกำลังอวยพรให้มึงอยู่"
+  ];
 
-    function spin() {
-        const wheel = document.getElementById("wheel");
-        const result = document.getElementById("result");
+  const wheel = document.getElementById("wheel");
+  const resultEl = document.getElementById("result");
+  const spinBtn = document.getElementById("spinBtn");
 
-        const randomRotation = 360 * 5 + Math.floor(Math.random() * 360);
-        wheel.style.transform = `rotate(${randomRotation}deg)`;
+  let isSpinning = false;
+  let currentRotation = 0;
 
-        setTimeout(() => {
-            const index = Math.floor((randomRotation % 360) / (360 / fortunes.length));
-            result.innerHTML = "✨ ผลคือ: <br>" + fortunes[index] + " ✨";
-        }, 5000);
-    }
+  function spin() {
+    if (isSpinning) return;
+    isSpinning = true;
+    spinBtn.disabled = true;
+
+    const segment = 360 / fortunes.length;
+    const extraSpins = 5 + Math.floor(Math.random() * 3);
+    const randomAngle = Math.floor(Math.random() * 360);
+
+    const targetRotation = currentRotation + extraSpins * 360 + randomAngle;
+    currentRotation = targetRotation;
+
+    wheel.style.transform = `rotate(${targetRotation}deg)`;
+
+    setTimeout(() => {
+      const finalAngle = targetRotation % 360;
+      const index = Math.floor(finalAngle / segment);
+      const text = fortunes[index];
+
+      const now = new Date().toLocaleString("th-TH");
+
+      resultEl.innerHTML = `✨ ผลคือ: ${text} ✨<span class="small">เวลา: ${now}</span>`;
+
+      isSpinning = false;
+      spinBtn.disabled = false;
+    }, 4600);
+  }
+
+  spinBtn.addEventListener("click", spin);
 </script>
 
 </body>
 </html>
+
+    
